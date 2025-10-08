@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Taller System</title>
+    <!-- Como Express sirve /public, las rutas van sin ../public -->
+    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+  </head>
+  <body>
+    <!-- Inicio de sesión -->
+    <section id="inicio-sesion">
+      <h1>Taller System</h1>
+      <input id="usuario" placeholder="Usuario (dueño / empleado)"/>
+      <input id="contrasenia" type="password" placeholder="Contraseña"/>
+      <button id="btn-ingresar">Ingresar</button>
+      <p id="msj-login" class="mensaje"></p>
+    </section>
+
+    <!-- Aplicación -->
+    <section id="app" class="oculto">
+      <!-- Barra lateral -->
+      <aside id="barra" class="expandido">
+        <div class="barra-top">
+          <button id="btn-toggle-barra" class="icono-btn" title="Expandir/colapsar">
+            <i class="bi bi-list"></i>
+          </button>
+          <span class="marca">Taller</span>
+        </div>
+
+        <nav class="barra-nav">
+          <button class="item" data-vista="calendario">
+            <span class="icono"><i class="bi bi-calendar"></i></span>
+            <span class="etiqueta">Calendario</span>
+          </button>
+          <button class="item" data-vista="vehiculos">
+            <span class="icono"><i class="bi bi-ev-front"></i></span>
+            <span class="etiqueta">Vehículos</span>
+          </button>
+          <button class="item" data-vista="facturacion">
+            <span class="icono"><i class="bi bi-cash"></i></span>
+            <span class="etiqueta">Facturación</span>
+          </button>
+          <button class="item" data-vista="historial">
+            <span class="icono"><i class="bi bi-clock-history"></i></span>
+            <span class="etiqueta">Historial</span>
+          </button>
+        </nav>
+
+        <div class="espaciador"></div>
+
+        <div class="barra-bottom">
+          <div class="usuario-box">
+            <div class="avatar"><i class="bi bi-person"></i></div>
+            <div class="usuario-info">
+              <div id="usuario-activo" class="usuario-nombre">—</div>
+              <div id="usuario-rol" class="muted">—</div>
+            </div>
+          </div>
+          <button id="btn-salir" class="item peligro">
+            <span class="icono"><i class="bi bi-x-circle"></i></span>
+            <span class="etiqueta">Cerrar sesión</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Contenido -->
+      <div class="contenido">
+        <header class="barra-superior">
+          <h2 id="titulo-vista">Calendario</h2>
+        </header>
+
+        <main>
+          <!-- Calendario -->
+          <section id="vista-calendario" class="vista">
+            <div class="cal-encabezado">
+              <button class="btn" id="btn-mes-anterior">◀</button>
+              <h3 id="etiqueta-mes"></h3>
+              <button class="btn" id="btn-mes-siguiente">▶</button>
+            </div>
+            <div class="grilla7" id="grilla-calendario"></div>
+          </section>
+
+          <!-- Vehículos -->
+          <section id="vista-vehiculos" class="vista oculto">
+            <div class="fila entre centro">
+              <h3>Vehículos</h3>
+              <button class="btn ok" id="btn-agregar-vehiculo">+ Agregar vehículo</button>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Patente</th>
+                  <th>Modelo</th>
+                  <th>Cliente</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tabla-vehiculos"></tbody>
+            </table>
+          </section>
+
+          <!-- Facturación -->
+          <section id="vista-facturacion" class="vista oculto">
+            <h3>Facturación</h3>
+            <p>Total facturado: <strong id="total-facturado">$0</strong></p>
+          </section>
+
+          <!-- Historial -->
+          <section id="vista-historial" class="vista oculto">
+            <h3>Historial</h3>
+            <ul id="lista-historial"></ul>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <!-- Modal Vehículo -->
+    <dialog id="modal-vehiculo">
+      <h3 id="titulo-modal-vehiculo">Vehículo</h3>
+      <input id="inp-patente" placeholder="Patente"/>
+      <input id="inp-modelo" placeholder="Modelo"/>
+      <input id="inp-idcliente" placeholder="ID Cliente (opcional)"/>
+      <menu>
+        <button id="btn-cancelar-vehiculo" class="btn">Cancelar</button>
+        <button id="btn-guardar-vehiculo" class="btn ok">Guardar</button>
+      </menu>
+    </dialog>
+
+    <!-- Modal Evento -->
+    <dialog id="modal-evento">
+      <h3>Evento</h3>
+      <p id="texto-dia"></p>
+      <input id="inp-evento" placeholder="Descripción (vacío = borrar)"/>
+      <menu>
+        <button id="btn-cancelar-evento" class="btn">Cancelar</button>
+        <button id="btn-guardar-evento" class="btn ok">Guardar</button>
+      </menu>
+    </dialog>
+
+    <!-- Igual, desde /public: -->
+    <script src="app.js" defer></script>
+  </body>
+</html>

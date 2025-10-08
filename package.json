@@ -1,0 +1,19 @@
+{
+  "name": "taller_api",
+  "version": "1.0.0",
+  "description": "Backend del sistema de gestión del taller mecánico",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "Yago Bosio",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "mysql2": "^3.15.1"
+  }
+}
