@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Taller System</title>
+  <link rel="stylesheet" href="estilo.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+</head>
+<body>
+  <!--Login-->
+  <section id="inicio-sesion">
+    <h1>Taller System</h1>
+    <input id="usuario" placeholder="Usuario (dueño / empleado)"/>
+    <input id="contrasenia" type="password" placeholder="Contraseña"/>
+    <button id="btn-ingresar">Ingresar</button>
+    <p id="msj-login" class="mensaje"></p>
+
+    <p class="mini muted">
+      ¿No tenés cuenta?
+      <button id="btn-abrir-registro" class="link-btn" type="button">Crear cuenta</button>
+    </p>
+  </section>
+
+  <!--App-->
+  <section id="app" class="oculto">
+    <aside id="barra" class="expandido">
+      <div class="barra-top">
+        <button id="btn-toggle-barra" class="icono-btn"><i class="bi bi-list"></i></button>
+        <span class="marca">Taller</span>
+      </div>
+      <nav class="barra-nav">
+        <button class="item" data-vista="calendario"><span class="icono"><i class="bi bi-calendar"></i></span><span class="etiqueta">Calendario</span></button>
+        <button class="item" data-vista="vehiculos"><span class="icono"><i class="bi bi-ev-front"></i></span><span class="etiqueta">Vehículos</span></button>
+        <button class="item" data-vista="repuestos"><span class="icono"><i class="bi bi-box-seam"></i></span><span class="etiqueta">Repuestos</span></button>
+        <button class="item" data-vista="facturacion"><span class="icono"><i class="bi bi-cash"></i></span><span class="etiqueta">Facturación</span></button>
+        <button class="item" data-vista="historial"><span class="icono"><i class="bi bi-clock-history"></i></span><span class="etiqueta">Historial</span></button>
+      </nav>
+      <div class="espaciador"></div>
+      <div class="barra-bottom">
+        <div class="usuario-box">
+          <div class="avatar"><i class="bi bi-person"></i></div>
+          <div class="usuario-info">
+            <div id="usuario-activo" class="usuario-nombre">—</div>
+            <div id="usuario-rol" class="muted">—</div>
+          </div>
+        </div>
+        <button id="btn-salir" class="item peligro"><span class="icono"><i class="bi bi-x-circle"></i></span><span class="etiqueta">Cerrar sesión</span></button>
+      </div>
+    </aside>
+
+    <div class="contenido">
+      <header class="barra-superior"><h2 id="titulo-vista">Calendario</h2></header>
+      <main>
+        <!--Calendario-->
+        <section id="vista-calendario" class="vista">
+          <div class="cal-encabezado">
+            <button class="btn" id="btn-mes-anterior">◀</button>
+            <h3 id="etiqueta-mes"></h3>
+            <button class="btn" id="btn-mes-siguiente">▶</button>
+          </div>
+          <div class="grilla7" id="grilla-calendario"></div>
+        </section>
+
+        <!--Vehículos-->
+        <section id="vista-vehiculos" class="vista oculto">
+          <div class="fila entre centro">
+            <h3>Vehículos</h3>
+            <button class="btn ok" id="btn-agregar-vehiculo">+ Agregar vehículo</button>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Patente</th><th>Modelo</th><th>Pre-análisis</th>
+                <th class="th-acciones">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-vehiculos"></tbody>
+          </table>
+        </section>
+
+        <!--Repuestos-->
+        <section id="vista-repuestos" class="vista oculto">
+          <div class="fila entre centro">
+            <h3>Repuestos</h3>
+            <button class="btn ok" id="btn-agregar-repuesto">+ Agregar repuesto</button>
+          </div>
+          <table>
+            <thead><tr><th>Nombre</th><th>Precio lista</th><th class="th-acciones">Acciones</th></tr></thead>
+            <tbody id="tabla-repuestos"></tbody>
+          </table>
+        </section>
+
+        <!--Facturación-->
+        <section id="vista-facturacion" class="vista oculto">
+          <div class="fila entre centro">
+            <h3>Facturación</h3>
+            <p>Total facturado: <strong id="total-facturado">$ 0</strong></p>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Patente</th><th>Modelo</th><th>Cliente</th><th>Factura</th>
+                <th class="th-acciones">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tabla-facturacion"></tbody>
+          </table>
+        </section>
+
+        <!--Historial-->
+        <section id="vista-historial" class="vista oculto">
+          <h3>Historial</h3>
+          <ul id="lista-historial"></ul>
+        </section>
+      </main>
+    </div>
+  </section>
+
+  <!--Modal Vehículo-->
+  <dialog id="modal-vehiculo">
+    <h3 id="titulo-modal-vehiculo">Vehículo</h3>
+    <div class="grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <label class="muted">ID Vehículo</label><input id="inp-idvehiculo" placeholder="(auto)" disabled/>
+      <label class="muted">Marca</label><input id="inp-marca" placeholder="Marca"/>
+      <label class="muted">Año</label><input id="inp-anio" type="number" min="1900" max="2100" placeholder="Año"/>
+      <label class="muted">Modelo</label><input id="inp-modelo" placeholder="Modelo"/>
+      <label class="muted">Patente</label><input id="inp-patente" placeholder="Patente"/>
+      <label class="muted">Color</label><input id="inp-color" placeholder="Color"/>
+      <label class="muted">Fecha ingreso</label><input id="inp-fechaIngreso" type="date"/>
+      <label class="muted">Fecha entrega</label><input id="inp-fechaEntrega" type="date"/>
+      <label class="muted">Cliente</label>
+      <div class="fila" style="gap:6px">
+        <input id="inp-idcliente" list="dl-clientes" placeholder="ID o nombre (opcional)" style="flex:1"/>
+        <datalist id="dl-clientes"></datalist>
+        <button id="btn-nuevo-cliente" class="btn" type="button">+ Nuevo</button>
+      </div>
+      <label class="muted" style="grid-column:1/3">Pre-análisis</label>
+      <textarea id="inp-preAnalisis" style="grid-column:1/3;height:90px" placeholder="Descripción corta"></textarea>
+    </div>
+    <menu><button id="btn-cancelar-vehiculo" class="btn">Cancelar</button><button id="btn-guardar-vehiculo" class="btn ok">Guardar</button></menu>
+  </dialog>
+
+  <!--Modal Nuevo Cliente-->
+  <dialog id="modal-cliente">
+    <h3>Nuevo cliente</h3>
+    <input id="cli-nombre" placeholder="Nombre"/>
+    <input id="cli-telefono" placeholder="Teléfono"/>
+    <input id="cli-email" placeholder="Email"/>
+    <menu><button id="cli-cancelar" class="btn">Cancelar</button><button id="cli-guardar" class="btn ok">Guardar</button></menu>
+  </dialog>
+
+  <!--Modal Trabajo-->
+  <dialog id="modal-trabajo">
+    <h3>Trabajo del vehículo</h3>
+    <input id="trab-desc" placeholder="Descripción"/>
+    <input id="trab-mano" type="number" step="0.01" placeholder="Mano de obra ($)"/>
+    <div class="fila entre centro" style="margin-top:6px">
+      <strong>Repuestos usados</strong>
+      <button id="btn-add-tr-item" class="btn">+ Agregar</button>
+    </div>
+    <table>
+      <thead><tr><th>Repuesto</th><th>Cantidad</th><th>Precio unit.</th><th class="th-acciones">Acciones</th></tr></thead>
+      <tbody id="tabla-trabajo-items"></tbody>
+    </table>
+    <menu><button id="trab-cancelar" class="btn">Cerrar</button><button id="trab-guardar" class="btn ok">Guardar trabajo</button></menu>
+  </dialog>
+
+  <!--Mini agregar item a Trabajo-->
+  <dialog id="modal-tr-item">
+    <h3>Agregar repuesto</h3>
+    <input id="tr-rep" list="dl-repuestos" placeholder="id - nombre"/>
+    <datalist id="dl-repuestos"></datalist>
+    <input id="tr-cant" type="number" min="1" step="1" placeholder="Cantidad"/>
+    <input id="tr-precio" type="number" step="0.01" placeholder="Precio unitario (opcional)"/>
+    <menu><button id="tr-cancelar" class="btn">Cancelar</button><button id="tr-aceptar" class="btn ok">Agregar</button></menu>
+  </dialog>
+
+  <!--Modal Repuesto-->
+  <dialog id="modal-repuesto">
+    <h3>Repuesto</h3>
+    <input id="rep-nombre" placeholder="Nombre"/>
+    <input id="rep-precio" type="number" step="0.01" placeholder="Precio lista"/>
+    <menu><button id="rep-cancelar" class="btn">Cancelar</button><button id="rep-guardar" class="btn ok">Guardar</button></menu>
+  </dialog>
+
+  <!--Modal Pagos / Ver factura-->
+  <dialog id="modal-factura">
+    <h3>Factura</h3>
+    <div class="fila entre centro">
+      <strong>Pagos</strong>
+      <button id="btn-add-pago" class="btn">+ Pago</button>
+    </div>
+    <table>
+      <thead><tr><th>Fecha</th><th>Monto</th><th>Medio</th></tr></thead>
+      <tbody id="tabla-pagos"></tbody>
+    </table>
+    <menu><button id="fac-cerrar" class="btn">Cerrar</button></menu>
+  </dialog>
+
+  <!--Modal Evento (calendario)-->
+  <dialog id="modal-evento">
+    <h3>Recordatorio</h3>
+    <p id="texto-dia"></p>
+    <input id="inp-evento" placeholder="Escribe tu recordatorio (vacío = borrar)"/>
+    <menu>
+      <button id="btn-eliminar-evento" class="btn peligro" style="display:none">Eliminar</button>
+      <button id="btn-cancelar-evento" class="btn">Cancelar</button>
+      <button id="btn-guardar-evento" class="btn ok">Guardar</button>
+    </menu>
+  </dialog>
+
+  <!-- === Modal Registro (ABAJO DE TODO) === -->
+  <dialog id="modal-registro">
+    <h3>Crear cuenta</h3>
+    <input id="reg-nombre" placeholder="Nombre y apellido"/>
+    <input id="reg-usuario" placeholder="Usuario"/>
+    <input id="reg-pass1" type="password" placeholder="Contraseña"/>
+    <input id="reg-pass2" type="password" placeholder="Repetir contraseña"/>
+    <label class="muted">Rol</label>
+    <select id="reg-rol">
+      <option value="empleado">empleado</option>
+      <option value="dueño">dueño</option>
+    </select>
+    <menu>
+      <button id="reg-cancelar" class="btn">Cancelar</button>
+      <button id="reg-guardar" class="btn ok">Crear cuenta</button>
+    </menu>
+  </dialog>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
