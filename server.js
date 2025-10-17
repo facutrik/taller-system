@@ -636,7 +636,7 @@ app.post("/api/facturas/:id/terminar", async (req, res) => {
   }
 });
 
-/*REGISTRO DE USUARIOS (ABAJO DE TODO)*/
+/*REGISTRO DE USUARIOS*/
 app.post("/api/usuarios/registrar", async (req, res) => {
   try {
     let { nombre, usuario, contrasena, rol } = req.body || {};
