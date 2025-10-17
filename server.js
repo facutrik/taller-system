@@ -412,7 +412,7 @@ app.get("/api/facturacion/total", async (_req, res) => {
   }
 });
 
-/* -------- PDF estilado -------- */
+/*PDF estilado*/
 app.get("/api/facturas/:id/pdf", async (req, res) => {
   const { id } = req.params;
 
@@ -549,7 +549,7 @@ app.get("/api/facturas/:id/pdf", async (req, res) => {
   }
 });
 
-/* -------- Pagos -------- */
+/*Pagos*/
 app.get("/api/facturas/:id/pagos", async (req, res) => {
   const { id } = req.params;
   try {
@@ -599,7 +599,7 @@ app.post("/api/facturas/:id/pagos", async (req, res) => {
   }
 });
 
-/* -------- NUEVO: Marcar como terminado -------- */
+/*NUEVO: Marcar como terminado*/
 app.post("/api/facturas/:id/terminar", async (req, res) => {
   const { id } = req.params;
   const conn = await pool.getConnection();
